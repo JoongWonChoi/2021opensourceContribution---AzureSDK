@@ -36,4 +36,7 @@ Week1 - Python팀 issue 선정 및 issue 살펴보기
 ## issue에 대한 resolve
 
 + Added kwarg to limit number of messages received in Queues #18783 <https://github.com/Azure/azure-sdk-for-python/pull/18783>
-+ 
++ 큐에 들어오는 메시지들의 수를 제한하기 위하여 keyword arguments를 추가하였다.
++ keyword arguments 즉 kwargs는 함수의 매개변수로써 인자 값을 **key = value** 값으로 받고자 할 때 사용된다.
++ 전달된 값은 dictionary 형태, 즉 {'key' : 'value'}와 같은 형태로 저장된다.
+
