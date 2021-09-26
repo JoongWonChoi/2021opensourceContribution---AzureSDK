@@ -1,0 +1,95 @@
+Azure Queue Storage는 	
+
+큐: 큐에는 메시지 집합이 포함됩니다. 모든 메시지는 큐에 있어야 합니다. 큐 이름은 모두 소문자여야 합니다. 큐의 명명에 대한 자세한 내용은 큐 및 메타데이터 명명을 참조하세요.
+
+
+
+이것은 버그라기보다 예상치 못한 발생?임.
+AZURE STORAGE의 큐인 receive message는 받을 메시지의 최대 수를 제한 하는 방법이 없다.
+만약 지속적으로 새 메시지를 얻는 큐에 대하여 사용된다면, 무한 루프에 갇힐 것이다 왜냐면 남은 메시지에 대하여 질문ㅇ?query를 시도 할 것이기에.
+
+만약 서버리스환경에서 동작하면, 실행에 시간제한이 있는 경우, 
+기능이 죽으면 잠재적 데이터 손실로 이어질 것이다.
+
+
+
+Added kwarg to limit number of messages recieved in Queues
+
+
+receive_message 함수 내용
+
+큐로부터 메시지를 검색하면, 큐의 앞에서부터 한 메세지씩 지운다.
+반응은 메시지 내용과 pop_receipt value를 포함하는데, 이거는 메시지를 지울 때 요구된다.
+메시지는 큐로부터 자동적으로 삭제되지는 않는다. 하지만 메시지가 검색되면, visibility_timeout 파라미터로 저징된 시간 간격동안 다른 사용자들한테 보이지 않는다. 
+만약 key-암호화 키 혹은 resolver 분야가 로컬 서비스 객체에 설정되면,
+메시지는 반환 되기 전에 해독?된다.
+키워드 ::visibility_timeout::(int)
+만약 지정된지 않으면 기본은 0이다.
+새로운 시간제한을 설정을 설정하라 - 몇 초로 / 서버 시간에 맞춰서?
+그 값은 0 이상이어야 하고, 7일보다 커서는 안된다.
+가시성 제한 값은 만료 시간 이후에 값으로 설정될 수 없다.
+가시성 제한 값은 time-to-live 값보다 작아야 한다.
+
+
+1. _queue_client.py : receive_messages 함수에 
+ :keyword int total_messages:
+ An integer that specifies the maximum number of messages to retrieve from the queue. 추가.
+total_messages : 큐로부터 검색할 메시지의 최대 숫자 제한(지정)
+
+messages_per_page = kwargs.pop('messages_per_page', None)
+messages_per_page = kwargs.pop('messages_per_page', 32)
+messages_per_page 변수에 32라는 인자 전달?
+
+total_messages = kwargs.pop('total_messages', None)
+total_messages 변수 생성 
+
+
+
+
+1.  변화가 있던 4개의 파일 중 대부분의 파일에서 공통적으로resulst_per_page인자를 디폴트로 32로 지정해놓았다.
+ 초기화 init 함수에 대한 인자로 messaes_to_retrieve라는 인자가 배치되었다.
+그리고 self.messages_to_retrieve라는 초기화 변수에 값을 집어넣는다.
+여기서 아마 messages_to_retrieve라는 변수는 
+
+
+2. storage/queue/_queue_client.py 파일에서
+ total_messages 라는 변수또한 추가로 생성
+kwargs 의 key값 중 pop( )각 첫번째 인자에 해당하는 값 pop 하는듯 함.
+messages_per_page = kwargs.pop('messages_per_page', 32)
+        visibility_timeout = kwargs.pop('visibility_timeout', None)
+        total_messages = kwargs.pop('total_messages', None)
+그런데 두번째 인자로 오는 값이 무엇을 의미하는지 잘 모르겠음.
+
+3. models.py에 _get_next_cb 함수에
+
+
+왜 32일까? - Azure 자체에서 지원하는 queue 사이즈가 32?
+MAX_QUEUE_SIZE 와 같이 대문자로 상수처럼 설정해놓으면
+더 확인하기 쉬웠을 거 같ㅇㅁ
+
+
+ labels와 milestones 이슈들의 차이?
+라벨은 예를들어 마일스톤:8월 난이도:쉬움 이런거여서 라벨링은 이슈를 보기 편하고 구분하기 쉽게하려는 목적이에요
+
+
+https://github.com/Azure/azure-sdk-for-python/milestones
+
+keyvault? password 저장소.
+https://docs.microsoft.com/ko-kr/azure/key-vault/general/basic-concepts
+https://luniverse.io/2021/02/17/vault-service-1/?lang=ko
+클라우드에서 범용적으로 사용하는 용어 및 개념
+원래 달느 클라우드를 사용핻ㅎ 패스워드를 직접 사용하지 않음
+그런 패스워드들을 모두 저장해놓는?
+하쉬코프 볼트 aws 시크릿매니저 같은
+키 밸류로 중요한 데이터 저장, key값으로 비밀 암호를 사용할 때?
+암호 키 갖고오는 서비스.
+
+
+중요한 인자들을 암호화하여 end to end로 암호화 하기 위한 서비스
+보안 issue 에 있어서 많이 씀.
+하쉬코프 볼트
+
+keyvault의 개념과 사용 예시 markdown으로 정리하여 wiki에 올리기!
+김병준님의 추천 issue
+https://github.com/Azure/azure-sdk-for-python/issues/17102 
+
