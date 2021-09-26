@@ -59,4 +59,7 @@ Azure Key Vault의 장점 및 특징
 + Azure 서비스들과의 통합
 	+ VMs, Logic Apps, Data Factory, WebApps..와 같은 다른 Azure 서비스들과 고도로 통합되어있다.
 
-![]()
+
+![AzureKeyVault2](https://user-images.githubusercontent.com/76723331/134801012-dc76b5af-7341-462e-9028-de54276cdc1d.png)
+
+
