@@ -93,3 +93,17 @@ keyvault의 개념과 사용 예시 markdown으로 정리하여 wiki에 올리�
 김병준님의 추천 issue
 https://github.com/Azure/azure-sdk-for-python/issues/17102 
 
+
+
+<0928 keyvault관련 링크들>
+
+경준님 keyvault test 설명 링크 
+-https://github.com/paikend/azure_keyvault_demo
+영선멘토님 추천 keyvault 관련 빌드 링크 
+-https://github.com/Azure/azure-sdk-for-python/pull/20135/commits/be2c99483ed6d2707a65b3d966b33463f1043bec
+-https://github.com/Azure/azure-sdk-for-python/pull/20900
+다음주차까지 확인해 볼 keyvault 코드
+-https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/keyvault/azure-keyvault-keys/azure/keyvault/keys/_client.py
+영남멘토님 추천 autorest관련 링크
+-https://devblogs.microsoft.com/azure-sdk/code-generation-with-autorest/
+
