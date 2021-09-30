@@ -107,3 +107,14 @@ https://github.com/Azure/azure-sdk-for-python/issues/17102
 영남멘토님 추천 autorest관련 링크
 -https://devblogs.microsoft.com/azure-sdk/code-generation-with-autorest/
 
+
+<Azure keyvault python용 package build해보기>
+1. cmd로 가상환경 진입
+2.Azure Active dir id lib 설치
+3. keyvault 비밀 lib 설치
+4. 명령어 사용하여 리소스 그룹 생성
+az group create --name KeyVault-PythonQS-rg --location eastus
+5. 키자격 증명모음 설치 az keyvault create
+6. 비밀의 고유 이름 설정 후 환경 변수로 저장
+
+7. 샘플 파이썬 코드 작성
