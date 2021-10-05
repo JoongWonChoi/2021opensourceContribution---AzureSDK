@@ -118,3 +118,10 @@ az group create --name KeyVault-PythonQS-rg --location eastus
 6. 비밀의 고유 이름 설정 후 환경 변수로 저장
 
 7. 샘플 파이썬 코드 작성
+
+
+1005
+지형님이 보신 이슈 
+- https://github.com/Azure/azure-sdk-for-python/issues/20797
+영남멘토님 추천 pycharm에서의 빌드 관련 링크 
+- https://cloudjourney.medium.com/azure-python-sdk-authentication-336d77a17eaa
