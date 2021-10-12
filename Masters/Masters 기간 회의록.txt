@@ -125,3 +125,6 @@ az group create --name KeyVault-PythonQS-rg --location eastus
 - https://github.com/Azure/azure-sdk-for-python/issues/20797
 영남멘토님 추천 pycharm에서의 빌드 관련 링크 
 - https://cloudjourney.medium.com/azure-python-sdk-authentication-336d77a17eaa
+
+<10/11>
+-Azure for python // docs나 test enhancement 에서라도 PR 한번 해보기
